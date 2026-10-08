@@ -1,3 +1,5 @@
+
+import { router } from "expo-router";
 import {
   Pressable,
   ScrollView,
@@ -16,30 +18,48 @@ export default function HomeScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+
         {/* Header */}
+
         <View style={styles.header}>
+
           <View>
-            <Text style={styles.smallText}>WELCOME, STUDENT 👋</Text>
+
+            <Text style={styles.smallText}>
+              WELCOME, STUDENT 👋
+            </Text>
 
             <Text style={styles.title}>
               Student Event
-              <Text style={styles.titleHighlight}> Ready</Text>
+              <Text style={styles.titleHighlight}>
+                {" "}Ready
+              </Text>
             </Text>
 
             <Text style={styles.subtitle}>
               Prepare. Check. Be Ready.
             </Text>
+
           </View>
 
           <View style={styles.profileCircle}>
-            <Text style={styles.profileEmoji}>🎓</Text>
+            <Text style={styles.profileEmoji}>
+              🎓
+            </Text>
           </View>
+
         </View>
 
+
         {/* Main Hero Card */}
+
         <View style={styles.heroCard}>
+
           <View style={styles.heroContent}>
-            <Text style={styles.heroEmoji}>📅</Text>
+
+            <Text style={styles.heroEmoji}>
+              📅
+            </Text>
 
             <Text style={styles.heroTitle}>
               What's happening
@@ -52,29 +72,73 @@ export default function HomeScreen() {
               before the big day.
             </Text>
 
-            <Pressable style={styles.primaryButton}>
+
+            {/* Explore Events Button */}
+
+            <Pressable
+              style={({ pressed }) => [
+                styles.primaryButton,
+                {
+                  opacity: pressed ? 0.7 : 1,
+                },
+              ]}
+              onPress={() => {
+                router.push("/event");
+              }}
+            >
+
               <Text style={styles.primaryButtonText}>
                 Explore Events →
               </Text>
+
             </Pressable>
+
           </View>
 
-          <Text style={styles.decorativeEmoji}>🎉</Text>
+          <Text style={styles.decorativeEmoji}>
+            🎉
+          </Text>
+
         </View>
 
+
         {/* Section Title */}
+
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Stay Ready</Text>
+
+          <Text style={styles.sectionTitle}>
+            Stay Ready
+          </Text>
 
           <Text style={styles.sectionSubtitle}>
             Everything you need in one place
           </Text>
+
         </View>
 
+
         {/* Feature Cards */}
+
         <View style={styles.cardRow}>
-          <View style={[styles.featureCard, styles.blueCard]}>
-            <Text style={styles.featureEmoji}>📋</Text>
+
+          {/* EVENT DETAILS */}
+
+          <Pressable
+            style={({ pressed }) => [
+              styles.featureCard,
+              styles.blueCard,
+              {
+                opacity: pressed ? 0.7 : 1,
+              },
+            ]}
+            onPress={() => {
+              router.push("/eventdetails");
+            }}
+          >
+
+            <Text style={styles.featureEmoji}>
+              📋
+            </Text>
 
             <Text style={styles.featureTitle}>
               Event Details
@@ -83,10 +147,22 @@ export default function HomeScreen() {
             <Text style={styles.featureText}>
               Check dates, locations, and event information.
             </Text>
-          </View>
 
-          <View style={[styles.featureCard, styles.orangeCard]}>
-            <Text style={styles.featureEmoji}>✅</Text>
+          </Pressable>
+
+
+          {/* MY CHECKLIST */}
+
+          <View
+            style={[
+              styles.featureCard,
+              styles.orangeCard,
+            ]}
+          >
+
+            <Text style={styles.featureEmoji}>
+              ✅
+            </Text>
 
             <Text style={styles.featureTitle}>
               My Checklist
@@ -95,13 +171,21 @@ export default function HomeScreen() {
             <Text style={styles.featureText}>
               Track the things you need to bring or prepare.
             </Text>
+
           </View>
+
         </View>
 
+
         {/* Readiness Card */}
+
         <View style={styles.readyCard}>
+
           <View>
-            <Text style={styles.readyLabel}>YOUR READINESS</Text>
+
+            <Text style={styles.readyLabel}>
+              YOUR READINESS
+            </Text>
 
             <Text style={styles.readyTitle}>
               Ready for your next event?
@@ -110,27 +194,42 @@ export default function HomeScreen() {
             <Text style={styles.readyText}>
               Complete your checklist and stay prepared.
             </Text>
+
           </View>
 
           <View style={styles.readyCircle}>
-            <Text style={styles.readyNumber}>0%</Text>
+
+            <Text style={styles.readyNumber}>
+              0%
+            </Text>
+
           </View>
+
         </View>
 
+
         {/* Bottom Message */}
+
         <View style={styles.bottomMessage}>
-          <Text style={styles.bottomEmoji}>✨</Text>
+
+          <Text style={styles.bottomEmoji}>
+            ✨
+          </Text>
 
           <Text style={styles.bottomText}>
             Prepare early. Enjoy the event.
           </Text>
+
         </View>
+
       </ScrollView>
     </View>
   );
 }
 
+
 const styles = StyleSheet.create({
+
   screen: {
     flex: 1,
     backgroundColor: "#0a0a0a",
@@ -357,4 +456,5 @@ const styles = StyleSheet.create({
     fontSize: 13,
     marginTop: 5,
   },
+
 });
