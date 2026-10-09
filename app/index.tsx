@@ -152,30 +152,33 @@ export default function HomeScreen() {
 
 
           {/* MY CHECKLIST */}
+          
 
-          <View
-            style={[
+          <Pressable
+            style={({ pressed }) => [
               styles.featureCard,
               styles.orangeCard,
+              {
+                opacity: pressed ? 0.7 : 1,
+              },
             ]}
+            onPress={() => {
+              router.push("/checklist");
+            }}
           >
-
             <Text style={styles.featureEmoji}>
               ✅
             </Text>
-
+          
             <Text style={styles.featureTitle}>
               My Checklist
             </Text>
-
+          
             <Text style={styles.featureText}>
               Track the things you need to bring or prepare.
             </Text>
-
-          </View>
-
-        </View>
-          
+          </Pressable>
+         </View>
     {/* ABOUT US */}
 
     <Pressable
@@ -485,42 +488,42 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
     aboutCard: {
-    backgroundColor: "#172033",
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "#303B52",
-    padding: 18,
-    marginTop: 18,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 14,
-    },
-    
-    aboutEmoji: {
-    fontSize: 32,
-    },
-    
-    aboutContent: {
-    flex: 1,
-    },
-    
-    aboutTitle: {
-    fontSize: 18,
-    fontWeight: "800",
-    color: "#E5F410",
-    },
-    
-    aboutText: {
-    fontSize: 13,
-    lineHeight: 20,
-    color: "#E5E7EB",
-    marginTop: 6,
-    },
-    
-    aboutArrow: {
-    fontSize: 25,
-    fontWeight: "800",
-    color: "#E5F410",
+     backgroundColor: "#172033",
+     borderRadius: 20,
+     borderWidth: 1,
+     borderColor: "#303B52",
+     padding: 18,
+     marginTop: 18,
+     flexDirection: "row",
+     alignItems: "center",
+     gap: 14,
+     },
+     
+     aboutEmoji: {
+     fontSize: 32,
+     },
+     
+     aboutContent: {
+     flex: 1,
+     },
+     
+     aboutTitle: {
+     fontSize: 18,
+     fontWeight: "800",
+     color: "#E5F410",
+     },
+     
+     aboutText: {
+     fontSize: 13,
+     lineHeight: 20,
+     color: "#E5E7EB",
+     marginTop: 6,
+     },
+     
+     aboutArrow: {
+     fontSize: 25,
+     fontWeight: "800",
+     color: "#E5F410",
 },
 
 });
