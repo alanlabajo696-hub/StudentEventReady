@@ -1,9 +1,12 @@
+import { router } from "expo-router";
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    View,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
+
 
 export default function AboutScreen() {
   return (
@@ -11,8 +14,20 @@ export default function AboutScreen() {
       style={styles.screen}
       contentContainerStyle={styles.container}
     >
+      
+      {/* Back Button */}
+      <Pressable
+        style={styles.backButton}
+        onPress={() => router.replace("/")}
+      >
+        <Text style={styles.backButtonText}>
+          ← Back to Home
+        </Text>
+      </Pressable>
+
       {/* Header */}
       <View style={styles.header}>
+
         <Text style={styles.emoji}>🎓</Text>
 
         <Text style={styles.title}>
@@ -109,6 +124,24 @@ export default function AboutScreen() {
 }
 
 const styles = StyleSheet.create({
+  backButton: {
+  alignSelf: "flex-start",
+  backgroundColor: "#172033",
+  borderWidth: 1,
+  borderColor: "#303B52",
+  paddingVertical: 10,
+  paddingHorizontal: 16,
+  borderRadius: 12,
+  marginTop: 10,
+  marginBottom: 8,
+  },
+  
+  backButtonText: {
+  color: "#E5F410",
+  fontSize: 14,
+  fontWeight: "700",
+  },
+
   screen: {
     flex: 1,
     backgroundColor: "#0a0a0a",
