@@ -1,10 +1,13 @@
+
 import { router } from "expo-router";
+import { useState } from "react";
 import {
   Pressable,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from "react-native";
 
@@ -42,7 +45,22 @@ const events = [
 ];
 
 export default function Events() {
+  
+  const [search, setSearch] = useState("");
+
+  const filteredEvents = events.filter((event) => {
+    const query = search.toLowerCase().trim();
+
+    return (
+      event.title.toLowerCase().includes(query) ||
+      event.date.toLowerCase().includes(query) ||
+      event.location.toLowerCase().includes(query) ||
+      event.short.toLowerCase().includes(query)
+    );
+  });
+
   return (
+ 
     <View style={styles.screen}>
       <StatusBar barStyle="light-content" />
 
@@ -64,14 +82,30 @@ export default function Events() {
           <Text style={styles.subtitle}>
             Discover what's happening on campus.
           </Text>
+          
+          <TextInput
+            style={styles.searchInput}
+            placeholder="🔍 Search events, dates, locations..."
+            placeholderTextColor="#8B95A7"
+            value={search}
+            onChangeText={setSearch}
+            autoCapitalize="none"
+            clearButtonMode="while-editing"
+          />
         </View>
 
         {/* Event Cards */}
-        {events.map((event) => {
+        {filteredEvents.map((event) => {
           const isBlue = event.color === "#4F46E5";
 
           return (
-            <Pressable
+            <Pressable 
+          onPress={() =>
+            router.push({
+              pathname: "/eventdetails",
+              params: { title: event.title },
+            })
+          }
               key={event.title}
               style={({ pressed }) => [
                 styles.eventCard,
@@ -103,6 +137,12 @@ export default function Events() {
             </Pressable>
           );
         })}
+        
+{filteredEvents.length === 0 && (
+  <Text style={styles.emptyMessage}>
+    No events found. Try another search.
+  </Text>
+)}
       </ScrollView>
     </View>
   );
@@ -183,4 +223,25 @@ const styles = StyleSheet.create({
   lightText: {
     color: "#E0E7FF",
   },
+
+  
+searchInput: {
+  backgroundColor: "#172033",
+  color: "#FFFFFF",
+  borderWidth: 1,
+  borderColor: "#343F55",
+  borderRadius: 16,
+  paddingHorizontal: 18,
+  paddingVertical: 15,
+  fontSize: 15,
+  marginTop: 20,
+  marginBottom: 24,
+},
+
+emptyMessage: {
+  color: "#C4CAD5",
+  fontSize: 15,
+  textAlign: "center",
+  paddingVertical: 30,
+},
 });
