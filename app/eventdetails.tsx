@@ -45,7 +45,7 @@ export default function EventDetails() {
 
       <ScrollView
         contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={true}
       >
         {/* Back Button */}
         <Pressable
@@ -137,11 +137,13 @@ const styles = StyleSheet.create({
   },
 
   scrollContent: {
-    padding: 24,
-    paddingBottom: 50,
-    width: "100%",
-    maxWidth: 500,
-    alignSelf: "center",
+    flexGrow: 1,
+paddingHorizontal: 32,
+paddingTop: 24,
+paddingBottom: 50,
+width: "100%",
+maxWidth: 1200,
+alignSelf: "center",
   },
 
   backButton: {

@@ -48,7 +48,7 @@ export default function Events() {
 
       <ScrollView
         contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={true}
       >
         {/* Header */}
         <View style={styles.header}>
@@ -113,12 +113,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#0a0a0a",
   },
-
+  
   scrollContent: {
-    padding: 24,
+    flexGrow: 1,
+    paddingHorizontal: 32,
+    paddingTop: 24,
     paddingBottom: 40,
     width: "100%",
-    maxWidth: 500,
+    maxWidth: 1200,
     alignSelf: "center",
   },
 
