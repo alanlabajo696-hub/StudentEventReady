@@ -1,6 +1,8 @@
 
 import { router } from "expo-router";
+import { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   Pressable,
   ScrollView,
   StatusBar,
@@ -9,7 +11,64 @@ import {
   View,
 } from "react-native";
 
+type WeatherData = {
+  temperature: number;
+  humidity: number;
+  weatherCode: number;
+};
+
+function getWeatherDescription(code: number) {
+  if (code === 0) return "Clear sky ☀️";
+  if ([1, 2].includes(code)) return "Partly cloudy 🌤️";
+  if (code === 3) return "Overcast ☁️";
+  if ([45, 48].includes(code)) return "Foggy 🌫️";
+  if ([51, 53, 55, 56, 57].includes(code)) return "Drizzle 🌦️";
+  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) {
+    return "Rainy 🌧️";
+  }
+  if ([71, 73, 75, 77, 85, 86].includes(code)) {
+    return "Snowy ❄️";
+  }
+  if ([95, 96, 99].includes(code)) return "Thunderstorm ⛈️";
+
+  return "Weather unavailable";
+}
+
 export default function HomeScreen() {
+
+  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    async function fetchWeather() {
+      try {
+        const response = await fetch(
+          "https://api.open-meteo.com/v1/forecast?latitude=10.52&longitude=124.03&current=temperature_2m,relative_humidity_2m,weather_code&timezone=Asia%2FManila"
+        );
+
+        if (!response.ok) {
+          throw new Error("Unable to get weather data.");
+        }
+
+        const data = await response.json();
+
+        setWeather({
+          temperature: data.current.temperature_2m,
+          humidity: data.current.relative_humidity_2m,
+          weatherCode: data.current.weather_code,
+        });
+      } catch (err) {
+        setError("Weather is currently unavailable.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchWeather();
+  }, []);
+
+
   return (
     <View style={styles.screen}>
       <StatusBar barStyle="light-content" />
@@ -100,7 +159,49 @@ export default function HomeScreen() {
           </Text>
 
         </View>
+       
+       
+        {/* WEATHER CARD */}
+        <View style={styles.weatherCard}>
+          <View style={styles.weatherHeader}>
+            <View>
+              <Text style={styles.weatherLabel}>
+                DANAO CITY WEATHER
+              </Text>
 
+              {loading ? (
+                <ActivityIndicator
+                  color="#E5F410"
+                  style={{ marginTop: 12 }}
+                />
+              ) : error ? (
+                <Text style={styles.weatherCondition}>
+                  {error}
+                </Text>
+              ) : weather ? (
+                <>
+                  <Text style={styles.temperature}>
+                    {weather.temperature}°C
+                  </Text>
+
+                  <Text style={styles.weatherCondition}>
+                    {getWeatherDescription(weather.weatherCode)}
+                  </Text>
+
+                  <Text style={styles.humidity}>
+                    Humidity: {weather.humidity}%
+                  </Text>
+                </>
+              ) : null}
+            </View>
+
+            <Text style={styles.weatherEmoji}>🌦️</Text>
+          </View>
+
+          <Text style={styles.weatherFooter}>
+            Check the weather before your school event.
+          </Text>
+        </View>
 
         {/* Section Title */}
 
@@ -525,5 +626,58 @@ const styles = StyleSheet.create({
      fontWeight: "800",
      color: "#E5F410",
 },
+
+
+  weatherCard: {
+    backgroundColor: "#172033",
+    borderRadius: 22,
+    padding: 22,
+    marginBottom: 30,
+    borderWidth: 1,
+    borderColor: "#303B52",
+  },
+
+  weatherHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  weatherLabel: {
+    color: "#AAB3C5",
+    fontSize: 12,
+    fontWeight: "800",
+    letterSpacing: 1,
+  },
+
+  temperature: {
+    color: "#E5F410",
+    fontSize: 36,
+    fontWeight: "800",
+    marginTop: 10,
+  },
+
+  weatherCondition: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "700",
+    marginTop: 4,
+  },
+
+  humidity: {
+    color: "#AAB3C5",
+    fontSize: 13,
+    marginTop: 8,
+  },
+
+  weatherEmoji: {
+    fontSize: 48,
+  },
+
+  weatherFooter: {
+    color: "#AAB3C5",
+    fontSize: 13,
+    marginTop: 18,
+  },
 
 });
