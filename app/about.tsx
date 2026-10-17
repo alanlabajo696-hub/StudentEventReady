@@ -66,9 +66,7 @@ export default function AboutScreen() {
         </Text>
 
         <Text style={styles.description}>
-          StudentEventReady is a web application
-          designed to help students discover school
-          events and prepare for upcoming activities.
+          StudentEventReady is an application built with React Native and Expo that helps students discover sample school events and prepare for upcoming activities.
         </Text>
       </View>
 
@@ -126,7 +124,7 @@ export default function AboutScreen() {
         </Text>
 
         <Text style={styles.info}>
-          Platform: web Application
+          Platform: React Native with Expo
         </Text>
 
         <Text style={styles.info}>
